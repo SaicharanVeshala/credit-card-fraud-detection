@@ -7,7 +7,7 @@ import plotly.express as px
 import joblib
 import os
 import sys
-sys.path.append(os.path.join(os.path.dirname(__file__), "..", ".."))
+
 
 sys.path.append(
     os.path.join(os.path.dirname(__file__), "..", "..")
@@ -23,7 +23,7 @@ st.set_page_config(
 )
 
 #-----------Condtanats----------------------------------------------
-API_URL = "https://fraud-api.onrender.com"  # temporary placeholder
+API_URL="http://127.0.0.1:8000"
 DATA_PATH=os.path.join(os.path.dirname(__file__),
                        "..","..","data","processed")
 
