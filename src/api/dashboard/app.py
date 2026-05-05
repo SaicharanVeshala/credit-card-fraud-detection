@@ -7,7 +7,7 @@ import plotly.express as px
 import joblib
 import os
 import sys
-
+sys.path.append(os.path.join(os.path.dirname(__file__), "..", ".."))
 
 sys.path.append(
     os.path.join(os.path.dirname(__file__), "..", "..")
@@ -23,7 +23,7 @@ st.set_page_config(
 )
 
 #-----------Condtanats----------------------------------------------
-API_URL="http://127.0.0.1:8000"
+API_URL = "https://fraud-api.onrender.com"  # temporary placeholder
 DATA_PATH=os.path.join(os.path.dirname(__file__),
                        "..","..","data","processed")
 
@@ -250,7 +250,7 @@ st.markdown("----------")
 
 #-----------------------PREDICTION BUTTON--------------
 # ----------------------
-predict_btn=st.button("ANALYZE TRANSACTION",type="primary",use_container_width=True)
+predict_btn=st.button("ANALYZE TRANSACTION",type="primary")
 
 if predict_btn:
     if not api_ok:
@@ -317,13 +317,13 @@ if predict_btn:
             with g_col:
                 st.plotly_chart(
                     make_gauge(fraud_pct,"Fraud Risk"),
-                    use_container_width=True
+                    use_container_width="strech"
                 )
             with s_col:
                 if result.get("top_reasons"):
                     st.plotly_chart(
                         make_shap_chart(result["top_reasons"]),
-                        use_container_width=True
+                        use_container_width="strech"
                     )
             st.markdown('<p class="section-title">Why did the model decide this?</p>',
                         unsafe_allow_html=True)
@@ -335,7 +335,7 @@ if predict_btn:
 
             st.dataframe(
                 reasons_df,
-                use_container_width=True,
+                use_container_width="strech",
                 column_config={
                     "feature"     : "Feature",
                     "value"       : "Feature Value",
@@ -390,7 +390,7 @@ if predict_btn:
 
         )
     fig_pref.update_layout(height=300,yaxis_range=[0,1])
-    st.plotly_chart(fig_pref,use_container_width=True)
+    st.plotly_chart(fig_pref,use_container_width="strech")
 
     st.markdown("-------")
     #st.markdown("BUILT AS AS PORTFOLIO PROJECT . LIGHT GBM + SHAP + FastAPI + Streamlit")

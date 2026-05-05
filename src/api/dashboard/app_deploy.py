@@ -143,7 +143,7 @@ all_v={f"V{i}":0.0 for i in range(1,29)}
 all_v.update({"V1":v1,"V2": v2, "V3": v3, "V4": v4,
               "V14": v14, "V17": v17, "V12": v12,
               "Amount": amt, "Time": tme})
-if st.button("Analyze Transaction",type="primary",use_container_width=True):
+if st.button("Analyze Transaction",type="primary"):
     with st.spinner("Analyzing...."):
         result=predict_direct(all_v)
     
@@ -172,7 +172,7 @@ if st.button("Analyze Transaction",type="primary",use_container_width=True):
                        {"range": [70, 100],"color": "#fadbd8"}]}
             ))
         fig.update_layout(height=220,margin=dict(t=40,b=0,l=0,r=20))
-        st.plotly_chart(fig,use_container_width=True)
+        st.plotly_chart(fig,use_container_width="strech")
 
     with s_col:
         reasons=result["top_reasons"]
@@ -185,5 +185,5 @@ if st.button("Analyze Transaction",type="primary",use_container_width=True):
         fig2.add_vline(x=0,line_color="gray")
         fig2.update_layout(title="Why?",height=300,
                            margin=dict(t=40,b=20,l=100,r=40))
-        st.plotly_chart(fig2,use_container_width=True)
-    st.dataframe(pd.DataFrame(reasons),use_container_width=True)
+        st.plotly_chart(fig2,use_container_width="strech")
+    st.dataframe(pd.DataFrame(reasons),use_container_width="strech")
