@@ -31,100 +31,89 @@ print("Loading scaler...")
 scaler    = joblib.load(SCALER_PATH)
 print("All loaded!")
 
-# ── Fake Redis cache (works on Windows without Docker) ─
+# ── Fake Redis cache ─────────────────────────────────
 cache = fakeredis.FakeRedis()
 cache.flushall()
 CACHE_TTL = 300  # seconds
 
-# ── FastAPI app ───────────────────────────────────────
+# ── FastAPI app ──────────────────────────────────────
 app = FastAPI(
-    title       = "Fraud Detection API",
-    description = "Real-time credit card fraud detection with SHAP explainability",
-    version     = "1.0.0"
+    title="Fraud Detection API",
+    description="Real-time credit card fraud detection with SHAP explainability",
+    version="1.0.0"
 )
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins  = ["*"],
-    allow_methods  = ["*"],
-    allow_headers  = ["*"],
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
-# ── Request schema ────────────────────────────────────
+# ── Request schema ───────────────────────────────────
 class TransactionRequest(BaseModel):
-    """
-    Input schema for a single transaction.
-    V1-V28 are PCA-transformed features from the dataset.
-    """
-    V1:  float = Field(default=0.0, description="PCA feature 1")
-    V2:  float = Field(default=0.0, description="PCA feature 2")
-    V3:  float = Field(default=0.0, description="PCA feature 3")
-    V4:  float = Field(default=0.0, description="PCA feature 4")
-    V5:  float = Field(default=0.0, description="PCA feature 5")
-    V6:  float = Field(default=0.0, description="PCA feature 6")
-    V7:  float = Field(default=0.0, description="PCA feature 7")
-    V8:  float = Field(default=0.0, description="PCA feature 8")
-    V9:  float = Field(default=0.0, description="PCA feature 9")
-    V10: float = Field(default=0.0, description="PCA feature 10")
-    V11: float = Field(default=0.0, description="PCA feature 11")
-    V12: float = Field(default=0.0, description="PCA feature 12")
-    V13: float = Field(default=0.0, description="PCA feature 13")
-    V14: float = Field(default=0.0, description="PCA feature 14")
-    V15: float = Field(default=0.0, description="PCA feature 15")
-    V16: float = Field(default=0.0, description="PCA feature 16")
-    V17: float = Field(default=0.0, description="PCA feature 17")
-    V18: float = Field(default=0.0, description="PCA feature 18")
-    V19: float = Field(default=0.0, description="PCA feature 19")
-    V20: float = Field(default=0.0, description="PCA feature 20")
-    V21: float = Field(default=0.0, description="PCA feature 21")
-    V22: float = Field(default=0.0, description="PCA feature 22")
-    V23: float = Field(default=0.0, description="PCA feature 23")
-    V24: float = Field(default=0.0, description="PCA feature 24")
-    V25: float = Field(default=0.0, description="PCA feature 25")
-    V26: float = Field(default=0.0, description="PCA feature 26")
-    V27: float = Field(default=0.0, description="PCA feature 27")
-    V28: float = Field(default=0.0, description="PCA feature 28")
-    Amount: float = Field(default=1.0,  ge=0, description="Transaction amount in USD")
-    Time:   float = Field(default=0.0,  ge=0, description="Seconds since first transaction")
+    V1: float = Field(default=0.0)
+    V2: float = Field(default=0.0)
+    V3: float = Field(default=0.0)
+    V4: float = Field(default=0.0)
+    V5: float = Field(default=0.0)
+    V6: float = Field(default=0.0)
+    V7: float = Field(default=0.0)
+    V8: float = Field(default=0.0)
+    V9: float = Field(default=0.0)
+    V10: float = Field(default=0.0)
+    V11: float = Field(default=0.0)
+    V12: float = Field(default=0.0)
+    V13: float = Field(default=0.0)
+    V14: float = Field(default=0.0)
+    V15: float = Field(default=0.0)
+    V16: float = Field(default=0.0)
+    V17: float = Field(default=0.0)
+    V18: float = Field(default=0.0)
+    V19: float = Field(default=0.0)
+    V20: float = Field(default=0.0)
+    V21: float = Field(default=0.0)
+    V22: float = Field(default=0.0)
+    V23: float = Field(default=0.0)
+    V24: float = Field(default=0.0)
+    V25: float = Field(default=0.0)
+    V26: float = Field(default=0.0)
+    V27: float = Field(default=0.0)
+    V28: float = Field(default=0.0)
+    Amount: float = Field(default=1.0, ge=0)
+    Time: float = Field(default=0.0, ge=0)
 
 
-#----------------RESPONSE SCHEMA--------------------------------------------------------------------------
+# ── Response schema ──────────────────────────────────
 class PredictResponse(BaseModel):
-    fraud_probability  :float
-    verdict            :str
-    confidence         :str
-    risk_score         :int
-    response_time_ms   :float
-    cached             :bool
-    top_reasons        :list
-
-#----------------HELPER FUNCTIONS----------------------------------------------------------------------------
-
-def preprocess(transaction: TransactionRequest)-> pd.DataFrame:
-    data=transaction.model_dump()
+    fraud_probability: float
+    verdict: str
+    confidence: str
+    risk_score: int
+    response_time_ms: float
+    cached: bool
+    top_reasons: list
 
 
-    data["Amount_log"]=float(np.log1p(data["Amount"]))
-    data["Hour"]=float((data["Time"]//3600)%24)
-    data["Is_night"]=float(
-        1 if (data["Hour"]>=22 or data["Hour"]<=5)else 0)
+# ── Helper functions ─────────────────────────────────
+def preprocess(transaction: TransactionRequest) -> pd.DataFrame:
+    data = transaction.model_dump()
 
+    data["Amount_log"] = float(np.log1p(data["Amount"]))
+    data["Hour"] = float((data["Time"] // 3600) % 24)
+    data["Is_night"] = float(1 if (data["Hour"] >= 22 or data["Hour"] <= 5) else 0)
 
     df = pd.DataFrame([data])
-
     df = df.drop(["Time", "Amount"], axis=1)
 
-
-    scale_cols    =["Amount_log","Hour","Is_night"]
-    df[scale_cols]=scaler.transform(df[scale_cols])
+    scale_cols = ["Amount_log", "Hour", "Is_night"]
+    df[scale_cols] = scaler.transform(df[scale_cols])
     return df
 
 
 def get_explanations(df: pd.DataFrame, top_n: int = 5) -> list:
-
     shap_vals = explainer.shap_values(df)
 
-    # For tree models
     if isinstance(shap_vals, list):
         shap_vals = shap_vals[1]
 
@@ -134,124 +123,110 @@ def get_explanations(df: pd.DataFrame, top_n: int = 5) -> list:
         "shap_value": shap_vals[0]
     })
 
-    # Sort by importance
     explanation = explanation.reindex(
-        explanation["shap_value"]
-        .abs()
-        .sort_values(ascending=False)
-        .index
+        explanation["shap_value"].abs().sort_values(ascending=False).index
     )
 
     top_features = explanation.head(top_n)
 
-    return[
+    return [
         {
             "feature": row["feature"],
             "value": float(row["value"]),
             "impact": float(row["shap_value"]),
-            "direction":
-            (
-                "increase"
-                if row["shap_value"]>0
-                else "decrease"
-            )
+            "direction": "increase" if row["shap_value"] > 0 else "decrease"
         }
         for _, row in top_features.iterrows()
     ]
-def make_cache_key(transaction: TransactionRequest)->str:
 
-    data=json.dumps(transaction.model_dump(),sort_keys=True)
+
+def make_cache_key(transaction: TransactionRequest) -> str:
+    data = json.dumps(transaction.model_dump(), sort_keys=True)
     return hashlib.md5(data.encode()).hexdigest()
 
-#------API ENDPOINTS-----------------------------------------------------------------------
+
+# ── API endpoints ────────────────────────────────────
 @app.get("/")
 def root():
-    return{
-        "message"   :"FRAUD DETECTION API RUNNING",
-        "docs"      :"/docs",
-        "health"    :"/health"
+    return {
+        "message": "FRAUD DETECTION API RUNNING",
+        "docs": "/docs",
+        "health": "/health"
     }
+
 
 @app.get("/health")
 def health():
-    return{
-        "status"     :"healthy",
-        "model"      :type(model).__name__,
-        "cache_keys" :cache.dbsize(),
+    return {
+        "status": "healthy",
+        "model": type(model).__name__,
+        "cache_keys": cache.dbsize(),
     }
-@app.post("/predict",response_model=PredictResponse)
+
+
+@app.post("/predict", response_model=PredictResponse)
 def predict(transaction: TransactionRequest):
-    start=time.time()
-    cache_key=make_cache_key(transaction)
-    cached_result=cache.get(cache_key)
+    start = time.time()
+    cache_key = make_cache_key(transaction)
+    cached_result = cache.get(cache_key)
 
     if cached_result:
-        result=json.loads(cached_result)
-        result["cached"]=True
-        result["response_time_ms"]=round((time.time()-start)*1000,2)
+        result = json.loads(cached_result)
+        result["cached"] = True
+        result["response_time_ms"] = round((time.time() - start) * 1000, 2)
         return result
-    
+
     try:
-        df=preprocess(transaction)
+        df = preprocess(transaction)
     except Exception as e:
-        raise HTTPException(status_code=442,detail=f"Preprocessing error : {str(e)}")
-    
+        raise HTTPException(status_code=422, detail=f"Preprocessing error: {str(e)}")
 
-    fraud_prob=float(model.predict_proba(df)[0][1])
-    verdict="FRAUD" if fraud_prob>=0.5 else "LEGIT"
-    confidence="HIGH" if abs (fraud_prob - 0.5)>0.3 else "LOW"
-    risk_score=int(fraud_prob * 100)
+    fraud_prob = float(model.predict_proba(df)[0][1])
+    verdict = "FRAUD" if fraud_prob >= 0.5 else "LEGIT"
+    confidence = "HIGH" if abs(fraud_prob - 0.5) > 0.3 else "LOW"
+    risk_score = int(fraud_prob * 100)
 
+    top_reasons = get_explanations(df)
 
-    top_reasons=get_explanations(df)
-
-    result={
-        "fraud_probability"   :round(fraud_prob,4),
-        "verdict"             :verdict,
-        "confidence"          :confidence,
-        "risk_score"          :risk_score,
-        "cached"              :False,
-        "top_reasons"         :top_reasons,
-        "response_time_ms"    :round((time.time()-start)*1000,2)
+    result = {
+        "fraud_probability": round(fraud_prob, 4),
+        "verdict": verdict,
+        "confidence": confidence,
+        "risk_score": risk_score,
+        "cached": False,
+        "top_reasons": top_reasons,
+        "response_time_ms": round((time.time() - start) * 1000, 2)
     }
 
-
-    cache.setex(cache_key,
-            CACHE_TTL,
-            json.dumps(result)
-            )
+    cache.setex(cache_key, CACHE_TTL, json.dumps(result))
     return result
-
 
 
 @app.post("/predict/batch")
 def predict_batch(transactions: list[TransactionRequest]):
+    if len(transactions) > 100:
+        raise HTTPException(status_code=400, detail="Max 100 transactions allowed")
 
-    if len(transactions)>100:
-        raise HTTPException(
-            status_code=400,
-            detail="Max 100 transactions per batch  request"
-        )
-    results=[]
+    results = []
     for txn in transactions:
         try:
-            result=predict(txn)
-            results.append(result)
+            results.append(predict(txn))
         except Exception as e:
             results.append({"error": str(e)})
 
-    return {"predictions": results,
-            "count":len(results)}
+    return {"predictions": results, "count": len(results)}
 
 
 @app.get("/stats")
 def stats():
-    return{
-        "model_type"     :type(model).__name__,
-        "features"       :getattr(model,"n_features_in_","unknown"),
-        "cache_entries"  :cache.dbsize(),
-        "cache_ttl_secs" :CACHE_TTL,
+    return {
+        "model_type": type(model).__name__,
+        "features": getattr(model, "n_features_in_", "unknown"),
+        "cache_entries": cache.dbsize(),
+        "cache_ttl_secs": CACHE_TTL,
     }
 
-if __name__=="__main__":
-    uvicorn.run("main:app",host="0.0.0.0",port=8000,reload=True)
+
+# ── Entry point ──────────────────────────────────────
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
