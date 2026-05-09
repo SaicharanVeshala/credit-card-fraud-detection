@@ -145,7 +145,8 @@ streamlit run app.py
 | Method | Endpoint   | Description |
 |--------|------------|-------------|
 | POST   | `/predict` | Predict fraudulent transaction |
-| GET    | `/health`  | API health check |
+| GET    | `/health`  
+| API health check |
 | GET    | `/docs`    | Swagger API documentation |
 
 ---
@@ -199,6 +200,31 @@ The project prioritizes fraud detection effectiveness rather than relying only o
 
 ---
 
+
+
+
+## Sample API Request
+
+```json
+{
+  "amount": 2500,
+  "oldbalanceOrg": 5000,
+  "newbalanceOrig": 2500,
+  "oldbalanceDest": 1000,
+  "newbalanceDest": 3500
+}
+```
+
+## Sample API Response
+
+```json
+{
+  "prediction": "Fraudulent Transaction",
+  "fraud_probability": 0.92
+}
+```
+
+---
 
 
 ### Workflow
