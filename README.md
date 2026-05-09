@@ -172,6 +172,33 @@ streamlit run app.py
 ```
 
 ---
+## Model Performance
+
+The fraud detection system was evaluated using metrics specifically designed for highly imbalanced classification problems.
+
+### Evaluation Metrics Used
+
+- ROC-AUC Score
+- F1-Score
+- Precision-Recall Analysis
+- Average Precision Score
+- Confusion Matrix
+- Classification Report
+
+### Why These Metrics Matter
+
+Fraud detection datasets are highly imbalanced, meaning fraudulent transactions represent only a very small percentage of overall transactions.
+
+For this reason:
+- ROC-AUC measures the model’s ability to distinguish between fraudulent and legitimate transactions.
+- F1-Score balances precision and recall.
+- Precision-Recall analysis is more informative than accuracy for imbalanced datasets.
+- Confusion Matrix helps analyze false positives and false negatives.
+
+The project prioritizes fraud detection effectiveness rather than relying only on accuracy.
+
+---
+
 
 
 ### Workflow
