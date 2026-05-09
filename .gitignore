@@ -1,3 +1,4 @@
+
 # Python cache
 __pycache__/
 *.py[cod]
@@ -37,3 +38,25 @@ build/
 # Coverage
 .coverage
 htmlcov/
+
+
+
+# Large datasets
+data/raw/
+
+# Processed training artifacts
+data/processed/*.pkl
+data/processed/*.parquet
+
+# Notebook temp folders
+notebooks/data/
+notebooks/models/
+
+# Model binaries
+*.pkl
+
+# Exceptions (keep essential deployment models)
+!models/final_model.pkl
+!models/shap_explainer.pkl
+!models/feature_names.pkl
+!models/best_threshold.pkl
