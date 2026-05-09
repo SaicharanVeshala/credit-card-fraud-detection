@@ -1,9 +1,39 @@
-venv/
+# Python cache
 __pycache__/
-*.pkl
-*.csv
-*.parquet
-*.png
+*.py[cod]
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# Environment variables
+.env
+
+# Jupyter
 .ipynb_checkpoints/
+
+# VS Code
+.vscode/
+
+# Pytest
 .pytest_cache/
+
+# Streamlit cache/config
+.streamlit/
+
+# OS files
 .DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Build files
+dist/
+build/
+*.egg-info/
+
+# Coverage
+.coverage
+htmlcov/
