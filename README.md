@@ -62,6 +62,93 @@ The project is organized using a modular architecture to improve scalability, ma
 ---
 
 
+## Installation
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/SaicharanVeshala/fraud-detection-system.git
+```
+
+### Navigate to Project Directory
+
+```bash
+cd fraud-detection-system
+```
+
+### Create Virtual Environment
+
+```bash
+python -m venv venv
+```
+
+### Activate Virtual Environment
+
+#### Windows
+
+```bash
+venv\Scripts\activate
+```
+
+#### Linux / macOS
+
+```bash
+source venv/bin/activate
+```
+
+### Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## Running the Application
+
+### Run FastAPI Backend
+
+```bash
+uvicorn app.main:app --reload
+```
+
+FastAPI server will start at:
+
+```text
+http://127.0.0.1:8000
+```
+
+### FastAPI Interactive Documentation
+
+Swagger UI:
+
+```text
+http://127.0.0.1:8000/docs
+```
+
+ReDoc Documentation:
+
+```text
+http://127.0.0.1:8000/redoc
+```
+
+### Run Streamlit Frontend
+
+```bash
+streamlit run app.py
+```
+
+---
+
+## API Endpoints
+
+| Method | Endpoint   | Description |
+|--------|------------|-------------|
+| POST   | `/predict` | Predict fraudulent transaction |
+| GET    | `/health`  | API health check |
+| GET    | `/docs`    | Swagger API documentation |
+
+---
 
 
 ### Workflow
