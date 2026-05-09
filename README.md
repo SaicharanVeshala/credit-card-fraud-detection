@@ -14,6 +14,67 @@ This project aims to build a scalable machine learning system capable of identif
 
 ---
 
+
+
+## System Architecture
+
+The system follows a modular machine learning architecture designed for real-time fraud prediction.
+
+```text
+User
+   ↓
+Streamlit Frontend
+   ↓
+FastAPI Backend
+   ↓
+Feature Engineering Pipeline
+   ↓
+LightGBM Fraud Detection Model
+   ↓
+Fraud Prediction Response
+
+
+
+
+```
+
+## Project Structure
+
+```text
+fraud-detection-system/
+│
+├── data/                  # Dataset files
+├── features/              # Feature engineering scripts
+├── models/                # Trained ML models
+├── notebooks/             # Jupyter notebooks for experimentation
+├── app/                   # FastAPI application
+├── tests/                 # Unit tests
+├── screenshots/           # Project screenshots
+│
+├── README.md
+├── requirements.txt
+├── Dockerfile
+└── .gitignore
+```
+
+The project is organized using a modular architecture to improve scalability, maintainability, and deployment readiness.
+
+---
+
+
+
+
+### Workflow
+
+1. User submits transaction details through the Streamlit interface.
+2. FastAPI backend receives the request.
+3. Input data is validated using Pydantic schemas.
+4. Feature engineering and preprocessing are applied.
+5. The trained LightGBM model performs inference.
+6. Fraud probability and prediction result are returned to the user interface.
+
+---
+
 ## Overview
 
 This project is designed to identify potentially fraudulent transactions using machine learning techniques on highly imbalanced financial datasets. The system integrates a FastAPI backend for real-time inference and a Streamlit frontend for interactive user experience.
