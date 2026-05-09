@@ -250,3 +250,56 @@ The project focuses not only on model accuracy but also on scalable backend inte
 | Version Control      | Git, GitHub            | 
 
 ---
+
+
+
+## Deployment
+
+The project is designed for deployment-ready machine learning inference using FastAPI and Streamlit.
+
+### Deployment Features
+
+- Real-time prediction API using FastAPI
+- Interactive Streamlit frontend
+- Modular backend architecture
+- REST API integration
+- Scalable inference pipeline
+
+### Current Deployment
+
+- Hugging Face Spaces
+- GitHub Version Control
+
+---
+
+
+## Future Improvements
+
+The following enhancements can further improve the scalability and production readiness of the system:
+
+- SHAP-based explainable AI integration
+- Docker containerization
+- AWS cloud deployment
+- Real-time transaction streaming using Kafka
+- CI/CD pipeline integration
+- Drift detection and monitoring
+- Redis-based caching
+- Advanced fraud analytics dashboard
+- Automated model retraining pipeline
+
+---
+## Conclusion
+
+This project demonstrates the integration of machine learning, backend engineering, and real-time inference for financial fraud detection.
+
+The system combines LightGBM-based fraud prediction with FastAPI backend services and Streamlit frontend interaction to create a scalable and deployment-oriented machine learning application.
+
+The project emphasizes:
+- real-time inference
+- modular architecture
+- fraud-domain evaluation metrics
+- scalable backend integration
+- production-oriented design principles
+
+---
+
