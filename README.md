@@ -297,7 +297,28 @@ The project is designed for deployment-ready machine learning inference using Fa
 - GitHub Version Control
 
 ---
+## Project Screenshots
 
+### Dashboard
+
+![Dashboard](screenshots/dashboard.png)
+
+### Fraud Prediction
+
+![Prediction](screenshots/prediction.png)
+
+### SHAP Explainability
+
+![SHAP](screenshots/shap_summary.png)
+
+
+### Confusion Matrix
+
+![Confusion](screenshots/confusion_matrix.png)
+
+### Swagger API Documentation
+
+![Swagger](screenshots/swagger_docs.png)
 
 ## Future Improvements
 
