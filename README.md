@@ -1,6 +1,7 @@
-# Real-Time Fraud Detection System using LightGBM and FastAPI
+# 💳 Fraud Detection System — ML + FastAPI + Streamlit + Docker
 
-A production-oriented machine learning system for detecting fraudulent financial transactions in real time using LightGBM, FastAPI, and Streamlit.
+A production-style end-to-end fraud detection system using LightGBM, FastAPI, Streamlit, Docker, and SHAP explainability for real-time fraud prediction and deployment.
+
 
 
 
