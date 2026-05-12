@@ -1,4 +1,4 @@
-# FraudShield AI 
+# FraudShield ML
 
 
 An end-to-end machine learning system for detecting fraudulent credit card transactions in real time using LightGBM, FastAPI, Streamlit, SHAP explainability, and Docker.
