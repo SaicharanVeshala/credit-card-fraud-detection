@@ -1,62 +1,9 @@
-
-# Python cache
-__pycache__/
-*.py[cod]
-
-# Virtual environments
 venv/
-env/
-ENV/
-
-# Environment variables
-.env
-
-# Jupyter
+__pycache__/
+*.pyc
 .ipynb_checkpoints/
-
-# VS Code
-.vscode/
-
-# Pytest
-.pytest_cache/
-
-# Streamlit cache/config
-.streamlit/
-
-# OS files
+.env
+outputs/
 .DS_Store
 Thumbs.db
-
-# Logs
 *.log
-
-# Build files
-dist/
-build/
-*.egg-info/
-
-# Coverage
-.coverage
-htmlcov/
-
-
-
-# Large datasets
-data/raw/
-
-# Processed training artifacts
-data/processed/*.pkl
-data/processed/*.parquet
-
-# Notebook temp folders
-notebooks/data/
-notebooks/models/
-
-# Model binaries
-*.pkl
-
-# Exceptions (keep essential deployment models)
-!models/final_model.pkl
-!models/shap_explainer.pkl
-!models/feature_names.pkl
-!models/best_threshold.pkl
