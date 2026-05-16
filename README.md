@@ -1,31 +1,34 @@
-# credit-card-fraud-detection
+# Credit Card Fraud Detection System
 
+![Python](https://img.shields.io/badge/Python-3.10-blue)
+![FastAPI](https://img.shields.io/badge/FastAPI-Backend-green)
+![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-red)
+![Docker](https://img.shields.io/badge/Docker-Containerized-blue)
+![XGBoost](https://img.shields.io/badge/XGBoost-ML-orange)
+![SHAP](https://img.shields.io/badge/SHAP-Explainability-purple)
 
-An end-to-end machine learning system for detecting fraudulent credit card transactions in real time using LightGBM, FastAPI, Streamlit, SHAP explainability, and Docker.
+An end-to-end machine learning project for real-time credit card fraud detection using XGBoost, FastAPI, Streamlit, Docker, and SHAP explainability.
 
-The project is designed to simulate a production-style machine learning workflow where a trained model is served through APIs, integrated with an interactive dashboard, and deployed using containerized services.
+The project focuses on building a practical machine learning workflow where a trained fraud detection model is exposed through APIs, connected to an interactive dashboard, and packaged using Docker for easier deployment.
 
 ---
 
-# Problem Statement
+# Features
 
-Credit card fraud is one of the biggest challenges in digital payment systems and online financial transactions. Fraudulent transactions lead to significant financial losses for banks, businesses, and customers while reducing trust in digital payment ecosystems.
-
-One major challenge in fraud detection is the highly imbalanced nature of credit card transaction datasets, where fraudulent transactions represent only a very small percentage of overall transactions.
-
-This project aims to build a scalable machine learning system capable of:
-
-- identifying fraudulent credit card transactions in real time
-- minimizing false negatives
-- serving predictions through APIs
-- supporting deployment-ready architecture
-- improving interpretability using explainable AI
+* Real-time fraud prediction API
+* Interactive Streamlit dashboard
+* XGBoost-based fraud classifier
+* SHAP explainability integration
+* Dockerized deployment
+* FastAPI backend services
+* Fraud risk scoring
+* Swagger API documentation
+* End-to-end ML workflow
+* Modular project structure
 
 ---
 
 # System Architecture
-
-The system follows a modular machine learning architecture designed for real-time fraud prediction.
 
 ```text
 User
@@ -36,7 +39,7 @@ FastAPI Backend
    ↓
 Feature Engineering Pipeline
    ↓
-LightGBM Fraud Detection Model
+XGBoost Fraud Detection Model
    ↓
 Prediction + SHAP Explainability
 ```
@@ -45,34 +48,20 @@ The application is fully containerized using Docker and orchestrated using Docke
 
 ---
 
-# Features
-
-- Real-time credit card fraud prediction
-- FastAPI REST API backend
-- Interactive Streamlit dashboard
-- SHAP-based explainability
-- Dockerized deployment
-- Docker Compose orchestration
-- Swagger API documentation
-- Modular project structure
-- Production-style ML deployment workflow
-
----
-
 # Tech Stack
 
-| Category | Technologies |
-|----------|--------------|
-| Programming Language | Python |
-| Machine Learning | LightGBM, Scikit-learn |
-| Backend | FastAPI |
-| Frontend | Streamlit |
-| Explainability | SHAP |
-| Data Processing | Pandas, NumPy |
-| Visualization | Matplotlib, Seaborn |
-| API Validation | Pydantic |
-| Deployment | Docker, Docker Compose, Hugging Face |
-| Version Control | Git, GitHub |
+| Category             | Technologies           |
+| -------------------- | ---------------------- |
+| Programming Language | Python                 |
+| Machine Learning     | XGBoost, Scikit-learn  |
+| Backend              | FastAPI                |
+| Frontend             | Streamlit              |
+| Explainability       | SHAP                   |
+| Data Processing      | Pandas, NumPy          |
+| Visualization        | Matplotlib, Seaborn    |
+| API Validation       | Pydantic               |
+| Deployment           | Docker, Docker Compose |
+| Version Control      | Git, GitHub            |
 
 ---
 
@@ -81,94 +70,101 @@ The application is fully containerized using Docker and orchestrated using Docke
 ```text
 credit-card-fraud-detection/
 │
+├── assets/
 ├── data/
-├── features/
-├── models/
+│   ├── raw/
+│   └── processed/
+│
 ├── notebooks/
-├── outputs/
-├── screenshots/
+│   ├── 01_eda.ipynb
+│   ├── 02_features.ipynb
+│   ├── 03_models.ipynb
+│   └── 04_explainability.ipynb
+│
 ├── src/
 │   ├── api/
-│   ├── dashboard/
-│   └── models/
+│   │   └── main.py
+│   │
+│   └── dashboard/
+│       └── app.py
 │
 ├── tests/
 ├── Dockerfile
 ├── docker-compose.yml
 ├── requirements.txt
-└── README.md
+├── README.md
+└── .gitignore
 ```
-
-The project follows a modular architecture to improve scalability, maintainability, and deployment readiness.
 
 ---
 
 # Model Development
 
-The fraud detection model was trained on an imbalanced credit card transaction dataset.
+The fraud detection pipeline was trained on an imbalanced credit card transaction dataset.
 
-The workflow included:
+The workflow includes:
 
-- data preprocessing
-- feature engineering
-- feature scaling
-- model training
-- evaluation on imbalanced classification metrics
+* data preprocessing
+* feature engineering
+* feature scaling
+* model training
+* imbalanced classification evaluation
+* explainability analysis
 
-LightGBM was selected because of:
+XGBoost was selected because of:
 
-- strong performance on tabular datasets
-- fast inference speed
-- efficient handling of imbalanced data
-- scalability for real-time prediction systems
-
----
-
-# Evaluation Metrics
-
-The fraud detection system was evaluated using metrics specifically designed for imbalanced classification problems.
-
-## Metrics Used
-
-- ROC-AUC Score
-- F1-Score
-- Precision-Recall Analysis
-- Average Precision Score
-- Confusion Matrix
-- Classification Report
-
-## Why These Metrics Matter
-
-Credit card fraud datasets are highly imbalanced, meaning fraudulent transactions represent only a very small percentage of overall transactions.
-
-For this reason:
-
-- ROC-AUC measures the model’s ability to distinguish between fraudulent and legitimate transactions
-- F1-Score balances precision and recall
-- Precision-Recall analysis is more informative than accuracy for imbalanced datasets
-- Confusion Matrix helps analyze false positives and false negatives
-
-The project prioritizes recall because missing fraudulent transactions can have severe financial impact.
+* strong performance on tabular datasets
+* efficient handling of imbalanced data
+* fast inference speed
+* suitability for real-time prediction systems
 
 ---
 
-# Explainability
+# Model Performance
 
-The project integrates SHAP explainability to improve transparency and interpretability of predictions.
+| Model               | AUC-ROC | F1 Score |
+| ------------------- | ------- | -------- |
+| Logistic Regression | 0.97    | 0.86     |
+| XGBoost             | 0.99    | 0.92     |
+| LightGBM            | 0.98    | 0.90     |
+
+The project prioritizes recall and fraud detection sensitivity to minimize missed fraudulent transactions.
+
+---
+
+# Explainability with SHAP
+
+The system integrates SHAP explainability to improve prediction transparency and interpretability.
 
 SHAP values help identify:
 
-- which features contributed most to a prediction
-- why a transaction was classified as fraudulent
-- feature-level impact on model output
+* which features contributed most to predictions
+* why transactions are classified as fraudulent
+* feature-level impact on model outputs
 
-This improves trust and interpretability of the machine learning system.
+This improves trust and interpretability for fraud detection systems.
+
+---
+
+# Screenshots
+
+## Dashboard Preview
+
+![Dashboard](assets/dashboard.png)
+
+## SHAP Explainability
+
+![SHAP](assets/shap_analysis.png)
+
+## Swagger API Documentation
+
+![Swagger](assets/swagger_api.png)
 
 ---
 
 # Installation
 
-## Clone the Repository
+## Clone Repository
 
 ```bash
 git clone https://github.com/SaicharanVeshala/credit-card-fraud-detection.git
@@ -186,7 +182,7 @@ cd credit-card-fraud-detection
 python -m venv venv
 ```
 
-## Activate Virtual Environment
+## Activate Environment
 
 ### Windows
 
@@ -208,70 +204,49 @@ pip install -r requirements.txt
 
 ---
 
-# Running the Application Locally
+# Run Locally
 
-## Run FastAPI Backend
+## Start FastAPI Backend
 
 ```bash
 uvicorn src.api.main:app --reload --host 0.0.0.0 --port 7860
 ```
 
-FastAPI server will start at:
+FastAPI server:
 
 ```text
 http://127.0.0.1:7860
 ```
 
-## FastAPI Interactive Documentation
-
-Swagger UI:
+Swagger documentation:
 
 ```text
 http://127.0.0.1:7860/docs
 ```
 
-## Run Streamlit Frontend
+## Start Streamlit Dashboard
 
 ```bash
 streamlit run src/dashboard/app.py
+```
+
+Dashboard URL:
+
+```text
+http://127.0.0.1:8501
 ```
 
 ---
 
 # Docker Deployment
 
-The project is fully containerized using Docker and Docker Compose.
-
-## Start the Entire Application
+## Start Application
 
 ```bash
-docker compose up -d
+docker compose up --build
 ```
 
-This starts:
-
-- FastAPI backend container
-- Streamlit dashboard container
-
----
-
-# Application URLs
-
-## Streamlit Dashboard
-
-```text
-http://localhost:8501
-```
-
-## FastAPI Swagger Documentation
-
-```text
-http://localhost:7860/docs
-```
-
----
-
-# Stop Containers
+## Stop Containers
 
 ```bash
 docker compose down
@@ -281,11 +256,11 @@ docker compose down
 
 # API Endpoints
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | /predict | Predict fraudulent transaction |
-| GET | /health | API health check |
-| GET | /docs | Swagger API documentation |
+| Method | Endpoint   | Description               |
+| ------ | ---------- | ------------------------- |
+| POST   | `/predict` | Fraud prediction          |
+| GET    | `/health`  | API health check          |
+| GET    | `/docs`    | Swagger API documentation |
 
 ---
 
@@ -293,11 +268,11 @@ docker compose down
 
 ```json
 {
-  "amount": 2500,
-  "oldbalanceOrg": 5000,
-  "newbalanceOrig": 2500,
-  "oldbalanceDest": 1000,
-  "newbalanceDest": 3500
+  "V1": -1.359807,
+  "V2": -0.072781,
+  "V3": 2.536346,
+  "Amount": 149.62,
+  "Time": 0
 }
 ```
 
@@ -305,8 +280,10 @@ docker compose down
 
 ```json
 {
-  "prediction": "Fraudulent Transaction",
-  "fraud_probability": 0.92
+  "fraud_probability": 0.92,
+  "verdict": "FRAUD",
+  "confidence": "HIGH",
+  "risk_score": 92
 }
 ```
 
@@ -315,79 +292,64 @@ docker compose down
 # Workflow
 
 1. User submits transaction details through the Streamlit dashboard
-2. FastAPI backend receives the request
-3. Input data is validated using Pydantic schemas
-4. Feature engineering and preprocessing are applied
-5. The trained LightGBM model performs inference
-6. Fraud probability and prediction result are returned
-7. SHAP explainability is generated
+2. FastAPI backend validates and processes the request
+3. Feature engineering and preprocessing are applied
+4. XGBoost model performs inference
+5. Fraud probability and risk score are generated
+6. SHAP explanations are returned
+7. Results are visualized in the dashboard
 
 ---
 
-# Deployment Architecture
+# Current Status
 
-The project uses Docker Compose to orchestrate multiple services together.
-
-## FastAPI Container
-
-- serves machine learning inference APIs
-- loads trained model and preprocessing pipeline
-- handles prediction requests
-
-## Streamlit Container
-
-- provides interactive user interface
-- communicates with FastAPI backend
-- visualizes predictions and explanations
-
----
-
-# Screenshots
-
-Project screenshots and deployment previews are available in the `screenshots/` directory.
-
----
-
-# Current Deployment
-
-- Dockerized local deployment
-- Docker Compose orchestration
-- Hugging Face deployment
-- GitHub version control
+* Dockerized local deployment
+* FastAPI backend integration
+* Streamlit dashboard integration
+* SHAP explainability support
+* GitHub project versioning
 
 ---
 
 # Future Improvements
 
-Possible future enhancements include:
+* Public cloud deployment
+* CI/CD integration
+* Model monitoring
+* Drift detection
+* Enhanced dashboard analytics
+* Automated retraining workflows
 
-- AWS cloud deployment
-- CI/CD pipeline integration
-- Kafka-based real-time transaction streaming
-- Drift monitoring
-- Redis-based caching
-- Authentication and security layers
-- Automated retraining pipelines
-- Advanced fraud analytics dashboard
+---
+
+# Author
+
+**Sai Charan Veshala**
+
+GitHub:
+[https://github.com/SaicharanVeshala](https://github.com/SaicharanVeshala)
+
+LinkedIn:
+Add your LinkedIn profile link here.
 
 ---
 
 # Conclusion
 
-This project demonstrates the integration of machine learning, backend engineering, explainable AI, and containerized deployment for real-time credit card fraud detection.
+This project combines machine learning, backend development, explainable AI, and containerized deployment to build a real-time fraud detection system.
 
 The system combines:
 
-- LightGBM-based fraud prediction
-- FastAPI backend services
-- Streamlit frontend interaction
-- SHAP explainability
-- Docker-based deployment architecture
+* XGBoost-based fraud prediction
+* FastAPI backend services
+* Streamlit dashboard interaction
+* SHAP explainability
+* Docker-based deployment workflow
 
 The project emphasizes:
 
-- real-time inference
-- modular architecture
-- scalable backend integration
-- deployment-oriented design
-- production-style machine learning workflows
+* real-time inference
+* explainable AI
+* modular architecture
+* deployment-oriented design
+* end-to-end ML application development
